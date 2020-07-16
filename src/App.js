@@ -1,24 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState, useEffect} from 'react';
 import './App.css';
+import Header from './components/Header';
+import Axios from 'axios';
+import CharacterGrid from './components/CharacterGrid';
 
-function App() {
+const App = () => {
+
+  const [chars, setchars] = useState([])
+  const [isLoading, setisLoading] = useState(true)
+
+  useEffect(() => {
+
+    const fetchData = async () => {
+
+      const result =  await Axios(`https://www.breakingbadapi.com/api/characters`)
+
+      setchars(result.data);
+      setisLoading(false);
+    }
+
+    fetchData()
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+     <Header />
+     <CharacterGrid chars={chars} isLoading={isLoading} />
     </div>
   );
 }

@@ -16,6 +16,7 @@ const App = () => {
     const fetchData = async () => {
 
       const result =  await Axios(`https://www.breakingbadapi.com/api/characters?name=${query}`)
+      
       setchars(result.data);
       setisLoading(false);
     }
